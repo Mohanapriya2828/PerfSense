@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PerfSense Cross-Tool Performance Comparison</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 35px;
+    color: #20242a;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.header {
+    background: #111827;
+    color: white;
+    padding: 28px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    margin: 0 0 8px 0;
+}
+
+.header p {
+    margin: 0;
+    opacity: .85;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background: #1f2937;
+    color: white;
+    padding: 13px;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+.metric-title {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.chart-row {
+    display: grid;
+    grid-template-columns: 65px 1fr 115px;
+    align-items: center;
+    gap: 8px;
+    margin: 9px 0;
+}
+
+.bar-bg {
+    height: 18px;
+    background: #e5e7eb;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    background: #2563eb;
+}
+
+.note {
+    background: #fff7ed;
+    border-left: 5px solid #f59e0b;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.success {
+    background: #ecfdf5;
+    border-left: 5px solid #10b981;
+    padding: 16px;
+    border-radius: 6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>PerfSense — k6 vs JMeter</h1>
+    <p>Automated Cross-Tool Performance Test Comparison</p>
+</div>
+
+<div class="card">
+    <h2>Performance Results</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Scenario</th>
+                <th>Tool</th>
+                <th>Requests</th>
+                <th>Average</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+                <th>P95</th>
+                <th>Error Rate</th>
+                <th>Throughput</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+        <tr>
+            <td><strong>Baseline</strong></td>
+            <td>k6</td>
+            <td>550</td>
+            <td>53.95 ms</td>
+            <td>22.90 ms</td>
+            <td>415.83 ms</td>
+            <td>134.58 ms</td>
+            <td>0.00%</td>
+            <td>17.71 req/s</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Baseline</strong></td>
+            <td>JMeter</td>
+            <td>550</td>
+            <td>45.05 ms</td>
+            <td>23.00 ms</td>
+            <td>156.00 ms</td>
+            <td>88.55 ms</td>
+            <td>0.00%</td>
+            <td>18.51 req/s</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Stress</strong></td>
+            <td>k6</td>
+            <td>2670</td>
+            <td>968.44 ms</td>
+            <td>26.35 ms</td>
+            <td>3840.00 ms</td>
+            <td>2420.00 ms</td>
+            <td>0.00%</td>
+            <td>29.41 req/s</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Stress</strong></td>
+            <td>JMeter</td>
+            <td>2979</td>
+            <td>1418.00 ms</td>
+            <td>24.00 ms</td>
+            <td>3330.00 ms</td>
+            <td>2578.00 ms</td>
+            <td>0.00%</td>
+            <td>33.19 req/s</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Spike</strong></td>
+            <td>k6</td>
+            <td>1368</td>
+            <td>4220.00 ms</td>
+            <td>26.41 ms</td>
+            <td>7140.00 ms</td>
+            <td>5930.00 ms</td>
+            <td>0.00%</td>
+            <td>27.88 req/s</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Spike</strong></td>
+            <td>JMeter</td>
+            <td>1603</td>
+            <td>4606.34 ms</td>
+            <td>113.00 ms</td>
+            <td>6044.00 ms</td>
+            <td>5748.90 ms</td>
+            <td>0.00%</td>
+            <td>35.82 req/s</td>
+        </tr>
+        
+        </tbody>
+    </table>
+</div>
+
+<h2>Cross-Tool Visual Comparison</h2>
+
+<div class="chart-grid">
+    
+    <div class="chart-card">
+        <h3>Baseline</h3>
+
+        <div class="metric-title">Average Response Time</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:1.2%"></div>
+            </div>
+            <strong>53.95 ms</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:1.0%"></div>
+            </div>
+            <strong>45.05 ms</strong>
+        </div>
+
+        <div class="metric-title">Throughput</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:49.4%"></div>
+            </div>
+            <strong>17.71 req/s</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:51.7%"></div>
+            </div>
+            <strong>18.51 req/s</strong>
+        </div>
+    </div>
+    
+    <div class="chart-card">
+        <h3>Stress</h3>
+
+        <div class="metric-title">Average Response Time</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:21.0%"></div>
+            </div>
+            <strong>968.44 ms</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:30.8%"></div>
+            </div>
+            <strong>1418.00 ms</strong>
+        </div>
+
+        <div class="metric-title">Throughput</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:82.1%"></div>
+            </div>
+            <strong>29.41 req/s</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:92.7%"></div>
+            </div>
+            <strong>33.19 req/s</strong>
+        </div>
+    </div>
+    
+    <div class="chart-card">
+        <h3>Spike</h3>
+
+        <div class="metric-title">Average Response Time</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:91.6%"></div>
+            </div>
+            <strong>4220.00 ms</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:100.0%"></div>
+            </div>
+            <strong>4606.34 ms</strong>
+        </div>
+
+        <div class="metric-title">Throughput</div>
+
+        <div class="chart-row">
+            <span>k6</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:77.8%"></div>
+            </div>
+            <strong>27.88 req/s</strong>
+        </div>
+
+        <div class="chart-row">
+            <span>JMeter</span>
+            <div class="bar-bg">
+                <div class="bar" style="width:100.0%"></div>
+            </div>
+            <strong>35.82 req/s</strong>
+        </div>
+    </div>
+    
+</div>
+
+<br>
+
+<div class="success">
+    <strong>Reliability:</strong>
+    Both k6 and JMeter completed the recorded Baseline, Stress and Spike
+    executions with a 0% HTTP error rate.
+</div>
+
+<br>
+
+<div class="note">
+    <strong>Comparison Note:</strong>
+    The baseline configurations were workload-matched.
+    The current JMeter Stress and Spike configurations use comparable
+    ramp profiles rather than exact replicas of the k6 multi-stage
+    execution patterns. Stress and Spike results therefore demonstrate
+    cross-tool behavior under similar increasing-load conditions and
+    should not be interpreted as exact benchmark equivalence.
+</div>
+
+</div>
+
+</body>
+</html>
