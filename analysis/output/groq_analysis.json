@@ -1,6 +1,6 @@
 {
     "bottleneck_id": "BOT001",
     "severity": "High",
-    "reason": "Average response time has increased from ~50\u202fms (baseline) to ~969\u202fms under stress and ~4.2\u202fs during spike, indicating a significant latency issue under load.",
-    "recommendation": "Perform a detailed performance profiling to pinpoint the root cause\u2014check CPU usage, memory pressure, and database query performance. Start with database query optimization and indexing, then evaluate CPU/memory utilization. Consider scaling resources or implementing caching if needed."
+    "reason": "Under load (stress and spike tests) the average response time jumps from ~50ms to nearly 1s and 4s respectively, with P95 values exceeding 2.4s and 5.8s. This indicates a significant performance degradation that is not present under baseline or scale conditions.",
+    "recommendation": "Profile the application under load to identify the root cause. Common culprits include CPU contention, slow database queries, or insufficient caching. Steps to mitigate: enable detailed tracing, monitor CPU and memory usage, analyze slow queries, add indexes or query optimizations, implement caching for hot data, and consider horizontal scaling or load balancing if the CPU is saturated."
 }
