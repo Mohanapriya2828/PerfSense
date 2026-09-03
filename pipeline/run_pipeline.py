@@ -1,13 +1,13 @@
+import re
 import json
 import re
 from pathlib import Path
+
 from analysis.analyzer import analyze
-from ai.groq_client import classify
-from ai.gemini_client import generate_report
+from pipeline.langchain_orchestrator import run_ai_orchestration
 
 
 def main():
-
     print("=" * 60)
     print("PerfSense AI Performance Pipeline")
     print("=" * 60)
@@ -16,16 +16,12 @@ def main():
     metrics = analyze()
     print("✓ Analysis Complete")
 
-    print("\nStep 2 : Running Groq Root Cause Analysis...")
-    bottleneck = classify(metrics)
-    print("✓ Root Cause Identified")
+    print("\nStep 2 : Running LangChain AI Orchestration...")
+    bottleneck, report = run_ai_orchestration(metrics)
+    print("✓ LangChain Analysis and Report Complete")
 
-    print("\nStep 3 : Generating Gemini Optimization Report...")
-    report = generate_report(metrics, bottleneck)
-    print("✓ Report Generated")
-    print("\nStep 4 : Exporting AI Metrics for Grafana...")
+    print("\nStep 3 : Exporting AI Metrics for Grafana...")
 
-    # Extract health score from Gemini report
     health_match = re.search(
         r"Overall Health Score.*?\**(\d+)\s*/\s*100",
         report,
@@ -34,7 +30,6 @@ def main():
 
     health_score = int(health_match.group(1)) if health_match else 0
 
-    # Convert Groq severity into numeric value
     severity_map = {
         "Low": 1,
         "Moderate": 2,
@@ -45,7 +40,6 @@ def main():
     severity_text = bottleneck.get("severity", "Low")
     severity_value = severity_map.get(severity_text, 1)
 
-    # Highest P95 across analyzed tests
     p95_latency = float(metrics["P95(ms)"].max())
 
     grafana_data = {
@@ -69,11 +63,9 @@ def main():
 
     print("\nSummary")
     print("-" * 30)
-
     print(metrics)
 
     print("\nGroq Output")
-
     print(json.dumps(bottleneck, indent=4))
 
     print("\nReport saved to:")
