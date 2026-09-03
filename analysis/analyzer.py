@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-INPUT_FOLDER = Path("analysis/sample_data")
+INPUT_FOLDER = Path("k6/results")
 OUTPUT_FOLDER = Path("analysis/output")
 CHART_FOLDER = Path("analysis/charts")
 

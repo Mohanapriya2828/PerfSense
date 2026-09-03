@@ -1,6 +1,6 @@
 {
     "bottleneck_id": "BOT001",
-    "severity": "Moderate",
-    "reason": "The P95 latency consistently hovers around 49\u201150\u202fms and the maximum latency reaches 77\u202fms under load, indicating noticeable latency spikes relative to the average (~24\u202fms). This suggests the system is experiencing high response times.",
-    "recommendation": "Investigate and optimize slow code paths, reduce blocking I/O, add caching where appropriate, and consider scaling resources (CPU, memory) to handle peak load."
+    "severity": "High",
+    "reason": "Average response time has increased from ~50\u202fms (baseline) to ~969\u202fms under stress and ~4.2\u202fs during spike, indicating a significant latency issue under load.",
+    "recommendation": "Perform a detailed performance profiling to pinpoint the root cause\u2014check CPU usage, memory pressure, and database query performance. Start with database query optimization and indexing, then evaluate CPU/memory utilization. Consider scaling resources or implementing caching if needed."
 }
