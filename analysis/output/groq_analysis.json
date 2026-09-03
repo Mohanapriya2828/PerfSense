@@ -1,3 +1,6 @@
 {
-    "raw_output": "```json\n{\n    \"bottleneck_id\": \"BOT001\",\n    \"severity\": \"Low\",\n    \"reason\": \"The average response time is around 24ms across all tests, which is relatively low. The P95 values are also around 49ms, indicating that 95% of requests are completed within 49ms.\",\n    \"recommendation\": \"Monitor the system for any changes in traffic or resource utilization that may cause response times to increase, but currently, the system appears to be performing adequately.\"\n}\n```"
+    "bottleneck_id": "BOT001",
+    "severity": "Moderate",
+    "reason": "The P95 latency consistently hovers around 49\u201150\u202fms across all tests, indicating that a significant portion of requests experience higher-than\u2011desired response times. This suggests a latency bottleneck rather than throughput, error, or resource exhaustion issues.",
+    "recommendation": "Investigate request handling paths for inefficiencies (e.g., slow database queries, serialization overhead, or blocking I/O). Implement caching, optimize query plans, reduce context switches, and consider scaling horizontally if needed. Monitor CPU and memory usage during peak loads to confirm that the latency is not caused by resource contention."
 }
