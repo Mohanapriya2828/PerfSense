@@ -1,6 +1,6 @@
 {
     "bottleneck_id": "BOT001",
     "severity": "High",
-    "reason": "Under load (stress and spike tests) the average response time jumps from ~50ms to nearly 1s and 4s respectively, with P95 values exceeding 2.4s and 5.8s. This indicates a significant performance degradation that is not present under baseline or scale conditions.",
-    "recommendation": "Profile the application under load to identify the root cause. Common culprits include CPU contention, slow database queries, or insufficient caching. Steps to mitigate: enable detailed tracing, monitor CPU and memory usage, analyze slow queries, add indexes or query optimizations, implement caching for hot data, and consider horizontal scaling or load balancing if the CPU is saturated."
+    "reason": "During stress and spike tests the average, maximum, and 95th percentile response times jump to several seconds, far exceeding the baseline and scale test performance. This indicates a significant performance degradation under load.",
+    "recommendation": "Profile the application under load to identify slow operations. Focus on CPU usage, database query performance, and potential contention points. Apply optimizations such as query tuning, indexing, caching, and consider horizontal scaling or load balancing to reduce response times."
 }
